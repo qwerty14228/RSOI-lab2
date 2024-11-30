@@ -1,3 +1,5 @@
 from django.db import models
 
-# Create your models here.
+class Rating(models.Model):
+    username = models.CharField(max_length=80)
+    stars = models.IntegerField(min=0, max=100)
