@@ -1,7 +1,9 @@
+from uuid import uuid4
+
 from django.db import models
 
 class Library(models.Model):
-    library_uid = models.UUIDField(verbose_name='Library', unique=True)
+    library_uid = models.UUIDField(verbose_name='Library_uid', unique=True, default=uuid4)
     name = models.CharField(max_length=80)
     city = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
