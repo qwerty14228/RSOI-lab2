@@ -8,6 +8,6 @@ WORKDIR /app
 
 COPY src/rsoi_${SERVICE} .
 
-RUN pip3 install -r requirements.txt && python3 manage.py migrate
+RUN pip3 install -r requirements.txt
 
 CMD ["sh", "run.sh"]
