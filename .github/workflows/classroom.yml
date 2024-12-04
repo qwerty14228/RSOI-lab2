@@ -31,6 +31,15 @@ jobs:
           ./scripts/wait-script.sh
         env:
           WAIT_PORTS: 8080,8070,8060,8050
+          LIBRARY_POSTGRES_USER: "${{ secrets.LIBRARY_POSTGRES_USER }}"
+          LIBRARY_POSTGRES_PASSWORD: "${{ secrets.LIBRARY_POSTGRES_PASSWORD }}"
+          LIBRARY_POSTGRES_DB: "${{ secrets.LIBRARY_POSTGRES_DB }}"
+          RATING_POSTGRES_USER: "${{ secrets.RATING_POSTGRES_USER }}"
+          RATING_POSTGRES_PASSWORD: "${{ secrets.RATING_POSTGRES_PASSWORD }}"
+          RATING_POSTGRES_DB: "${{ secrets.RATING_POSTGRES_DB }}"
+          RESERVATION_POSTGRES_USER: "${{ secrets.RESERVATION_POSTGRES_USER }}"
+          RESERVATION_POSTGRES_PASSWORD: "${{ secrets.RESERVATION_POSTGRES_PASSWORD }}"
+          RESERVATION_POSTGRES_DB: "${{ secrets.RESERVATION_POSTGRES_DB }}"
 
       - name: Run API Tests
         uses: matt-ball/newman-action@master
