@@ -11,7 +11,8 @@ services:
       POSTGRES_DB: ${LIBRARY_POSTGRES_DB}
     volumes:
       - library-postgres-data:/var/lib/postgresql/data
-      - ./postgres/library/:/docker-entrypoint-initdb.d/
+    ports:
+      - 5432:5432
   rating-postgres:
     image: library/postgres:13
     container_name: rating-postgres
@@ -23,7 +24,6 @@ services:
       POSTGRES_DB: ${RATING_POSTGRES_DB}
     volumes:
       - rating-postgres-data:/var/lib/postgresql/data
-      - ./postgres/rating/:/docker-entrypoint-initdb.d/
   reservation-postgres:
     image: library/postgres:13
     container_name: reservation-postgres
@@ -35,7 +35,6 @@ services:
       POSTGRES_DB: ${RESERVATION_POSTGRES_DB}
     volumes:
       - reservation-postgres-data:/var/lib/postgresql/data
-      - ./postgres/reservation/:/docker-entrypoint-initdb.d/
   library:
     depends_on: 
       - library-postgres 
@@ -48,6 +47,7 @@ services:
     environment: 
       PORT: 8060
       ALLOWED_HOSTS: "library,localhost"
+      POSTGRES_HOST: "library-postgres"
       POSTGRES_USER: ${LIBRARY_POSTGRES_USER}
       POSTGRES_PASSWORD: "${LIBRARY_POSTGRES_PASSWORD}"
       POSTGRES_DB: ${LIBRARY_POSTGRES_DB}
@@ -66,6 +66,7 @@ services:
     environment: 
       PORT: 8050
       ALLOWED_HOSTS: "rating,localhost"
+      POSTGRES_HOST: "rating-postgres"
       POSTGRES_USER: ${RATING_POSTGRES_USER}
       POSTGRES_PASSWORD: "${RATING_POSTGRES_PASSWORD}"
       POSTGRES_DB: ${RATING_POSTGRES_DB}
@@ -84,6 +85,7 @@ services:
     environment: 
       PORT: 8070
       ALLOWED_HOSTS: "reservation,localhost"
+      POSTGRES_HOST: "reservation-postgres"
       POSTGRES_USER: ${RESERVATION_POSTGRES_USER}
       POSTGRES_PASSWORD: "${RESERVATION_POSTGRES_PASSWORD}"
       POSTGRES_DB: ${RESERVATION_POSTGRES_DB}

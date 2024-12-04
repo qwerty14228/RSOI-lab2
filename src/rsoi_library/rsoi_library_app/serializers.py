@@ -11,7 +11,7 @@ class LibrarySerializer(serializers.HyperlinkedModelSerializer):
 class BooksSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Books
-        fields = ['id', 'books_uid', 'name', 'author', 'genre', 'condition']
+        fields = ['id', 'book_uid', 'name', 'author', 'genre', 'condition']
 
 class LibraryBooksSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

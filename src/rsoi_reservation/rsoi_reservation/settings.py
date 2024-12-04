@@ -80,6 +80,8 @@ WSGI_APPLICATION = 'rsoi_reservation.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
+        'HOST': environ['POSTGRES_HOST'],
+        'PORT': 5432,
         'USER': environ['POSTGRES_USER'],
         'NAME': environ['POSTGRES_DB'],
         'PASSWORD': environ['POSTGRES_PASSWORD'],

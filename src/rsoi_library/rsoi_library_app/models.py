@@ -9,7 +9,7 @@ class Library(models.Model):
     address = models.CharField(max_length=255)
 
 class Books(models.Model):
-    books_uid = models.UUIDField(verbose_name='Books', unique=True, default=uuid4)
+    book_uid = models.UUIDField(verbose_name='Books', unique=True, default=uuid4)
     name = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
     genre = models.CharField(max_length=255)
@@ -19,7 +19,9 @@ class Books(models.Model):
         ('GOOD', 'GOOD'),
         ('BAD', 'BAD'),
     ]
-    conditions = models.CharField(max_length=20, choices=CONDITIONS, default='EXELLENT')
+    condition = models.CharField(max_length=20, choices=CONDITIONS, default='EXELLENT')
     
-class LibraryBooks(models.Model):       
+class LibraryBooks(models.Model):
+    book_id = models.ForeignKey(Books, on_delete=models.CASCADE)
+    library_id = models.ForeignKey(Library, on_delete=models.CASCADE)       
     available_count = models.IntegerField(verbose_name='Availability')

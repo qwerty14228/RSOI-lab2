@@ -13,7 +13,7 @@ class LibraryViewSet(viewsets.ModelViewSet):
     # permission_classes = [permissions.IsAuthenticated]
 
 class BooksViewSet(viewsets.ModelViewSet):
-    queryset = Books.objects.all().order_by('books_uid')
+    queryset = Books.objects.all().order_by('book_uid')
     serializer_class = BooksSerializer
     permission_classes = [permissions.AllowAny]
     # permission_classes = [permissions.IsAuthenticated]
