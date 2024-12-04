@@ -13,8 +13,53 @@ services:
       - ./postgres/:/docker-entrypoint-initdb.d/
     ports:
       - "5432:5432"
-
-# TODO добавить сервисы
-
+  library: 
+    image: library:latest
+    container_name: library
+    pull_policy: never 
+    build: 
+      args:
+        SERVICE: library
+    environment: 
+      PORT: 8060
+    restart: on-failure
+    ports: 
+      - "8060:8060"
+  rating: 
+    image: rating:latest
+    container_name: rating
+    pull_policy: never 
+    build: 
+      args:
+        SERVICE: rating
+    environment: 
+      PORT: 8050
+    restart: on-failure
+    ports: 
+      - "8050:8050"
+  reservation: 
+    image: reservation:latest
+    container_name: reservation
+    pull_policy: never 
+    build: 
+      args:
+        SERVICE: reservation
+    environment: 
+      PORT: 8070
+    restart: on-failure
+    ports: 
+      - "8070:8070"
+  gateway: 
+    image: gateway:latest
+    container_name: gateway
+    pull_policy: never 
+    build: 
+      args:
+        SERVICE: gateway
+    environment: 
+      PORT: 8080
+    restart: on-failure
+    ports: 
+      - "8080:8080"
 volumes:
   db-data:
