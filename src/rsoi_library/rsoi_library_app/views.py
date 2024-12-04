@@ -1,3 +1,5 @@
+from django.http import HttpResponse
+
 from rest_framework import permissions, viewsets
 
 from rsoi_library_app.models import Library, Books, LibraryBooks
@@ -21,3 +23,8 @@ class LibraryBooksViewSet(viewsets.ModelViewSet):
     serializer_class = LibraryBooksSerializer
     permission_classes = [permissions.AllowAny]
     # permission_classes = [permissions.IsAuthenticated]
+
+
+def healthcheck_view(request):
+    
+    return HttpResponse("")

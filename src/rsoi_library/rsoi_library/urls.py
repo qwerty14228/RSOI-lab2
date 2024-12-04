@@ -26,5 +26,6 @@ router.register(r'books', views.BooksViewSet)
 router.register(r'library_books', views.LibraryBooksViewSet)
 
 urlpatterns = [
-    path('api/v1/', include(router.urls))
+    path('api/v1/', include(router.urls)),
+    path('manage/health', views.healthcheck_view)
 ]

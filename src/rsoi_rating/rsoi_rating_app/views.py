@@ -1,3 +1,5 @@
+from django.http import HttpResponse
+
 from rest_framework import permissions, viewsets
 
 from rsoi_rating_app.models import Rating
@@ -8,3 +10,8 @@ class RatingViewSet(viewsets.ModelViewSet):
     serializer_class = RatingSerializer
     permission_classes = [permissions.AllowAny]
     # permission_classes = [permissions.IsAuthenticated]
+
+
+def healthcheck_view(request):
+    
+    return HttpResponse("")

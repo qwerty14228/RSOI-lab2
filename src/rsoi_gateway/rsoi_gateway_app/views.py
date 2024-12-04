@@ -1,3 +1,5 @@
+from django.http import HttpResponse
+
 from rest_framework import permissions, viewsets
 
 from rest_framework.response import Response
@@ -13,3 +15,8 @@ class LibraryViewSet(viewsets.ViewSet):
 
    def list(self, request):
       return Response(self.client.get_libraries())
+
+
+def healthcheck_view(request):
+    
+    return HttpResponse("")

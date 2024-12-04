@@ -1,3 +1,5 @@
+from django.http import HttpResponse
+
 from rest_framework import permissions, viewsets
 
 from rsoi_reservation_app.models import Reservation
@@ -9,3 +11,8 @@ class ReservationViewSet(viewsets.ModelViewSet):
     serializer_class = ReservationSerializer
     permission_classes = [permissions.AllowAny]
     # permission_classes = [permissions.IsAuthenticated]
+
+
+def healthcheck_view(request):
+    
+    return HttpResponse("")

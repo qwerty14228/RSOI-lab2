@@ -24,5 +24,6 @@ router = routers.DefaultRouter()
 router.register(r'libraries', views.LibraryViewSet, basename='library')
 
 urlpatterns = [
-    path('api/v1/', include(router.urls))
+    path('api/v1/', include(router.urls)), 
+    path('manage/health', views.healthcheck_view)
 ]

@@ -24,5 +24,6 @@ router = routers.DefaultRouter()
 router.register(r'reservations', views.ReservationViewSet)
 
 urlpatterns = [
-    path('api/v1/', include(router.urls))
+    path('api/v1/', include(router.urls)),
+    path('manage/health', views.healthcheck_view)
 ]
