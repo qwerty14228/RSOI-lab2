@@ -20,11 +20,9 @@ services:
     build: 
       args:
         SERVICE: library
-    environment: 
-      PORT: 8060
     restart: on-failure
     ports: 
-      - "8060:8060"
+      - "8060:8000"
   rating: 
     image: rating:latest
     container_name: rating
@@ -32,11 +30,9 @@ services:
     build: 
       args:
         SERVICE: rating
-    environment: 
-      PORT: 8050
     restart: on-failure
     ports: 
-      - "8050:8050"
+      - "8050:8000"
   reservation: 
     image: reservation:latest
     container_name: reservation
@@ -44,11 +40,9 @@ services:
     build: 
       args:
         SERVICE: reservation
-    environment: 
-      PORT: 8070
     restart: on-failure
     ports: 
-      - "8070:8070"
+      - "8070:8000"
   gateway: 
     image: gateway:latest
     container_name: gateway
@@ -56,10 +50,8 @@ services:
     build: 
       args:
         SERVICE: gateway
-    environment: 
-      PORT: 8080
     restart: on-failure
     ports: 
-      - "8080:8080"
+      - "8080:8000"
 volumes:
   db-data:
