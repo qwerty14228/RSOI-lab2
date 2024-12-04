@@ -20,9 +20,12 @@ services:
     build: 
       args:
         SERVICE: library
+    environment: 
+      PORT: 8060
+      ALLOWED_HOSTS: "library,localhost"
     restart: on-failure
     ports: 
-      - "8060:8000"
+      - "8060:8060"
   rating: 
     image: rating:latest
     container_name: rating
@@ -30,9 +33,12 @@ services:
     build: 
       args:
         SERVICE: rating
+    environment: 
+      PORT: 8050
+      ALLOWED_HOSTS: "rating,localhost"
     restart: on-failure
     ports: 
-      - "8050:8000"
+      - "8050:8050"
   reservation: 
     image: reservation:latest
     container_name: reservation
@@ -40,9 +46,12 @@ services:
     build: 
       args:
         SERVICE: reservation
+    environment: 
+      PORT: 8070
+      ALLOWED_HOSTS: "reservation,localhost"
     restart: on-failure
     ports: 
-      - "8070:8000"
+      - "8070:8070"
   gateway: 
     image: gateway:latest
     container_name: gateway
@@ -50,8 +59,12 @@ services:
     build: 
       args:
         SERVICE: gateway
+    environment: 
+      PORT: 8080
+      ALLOWED_HOSTS: "gateway,localhost"
+      LIBRARY_API_URL: "http://library:8060/api/v1"
     restart: on-failure
     ports: 
-      - "8080:8000"
+      - "8080:8080"
 volumes:
   db-data:

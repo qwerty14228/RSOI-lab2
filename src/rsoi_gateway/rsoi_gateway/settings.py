@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
+from os import environ
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +27,7 @@ SECRET_KEY = 'django-insecure-moapu4px(6u%(yeim5q3w^q9g3w^*51(komfep1j8(ko5i^#f9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = environ.get('ALLOWED_HOSTS', '').split(',')
 
 
 # Application definition
@@ -126,5 +128,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 SERVICE_URLS = {
-    'library': 'http://localhost:8060/api/v1'
+    'library': environ.get('LIBRARY_API_URL', 'http://localhost:8060/api/v1') 
 }
