@@ -1,10 +1,12 @@
+from uuid import uuid4
+
 from django.db import models
 
-class Resarvation(models.Model):
-    reservation_uid = models.UUIDField(verbose_name='Reservation', unique=True)
+class Reservation(models.Model):
+    reservation_uid = models.UUIDField(verbose_name='Reservation_uid', unique=True, default=uuid4)
     username = models.CharField(max_length=80)
-    book_uid = models.UUIDField(verbose_name='Book')
-    library_uid = models.UUIDField(verbose_name='Library')
+    book_uid = models.UUIDField(verbose_name='Book_uid')
+    library_uid = models.UUIDField(verbose_name='Library_uid')
 
     STATUSES = [
         ('RENTED', 'RENTED'),

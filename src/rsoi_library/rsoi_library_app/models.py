@@ -9,7 +9,7 @@ class Library(models.Model):
     address = models.CharField(max_length=255)
 
 class Books(models.Model):
-    books_uid = models.UUIDField(verbose_name='Books', unique=True)
+    books_uid = models.UUIDField(verbose_name='Books', unique=True, default=uuid4)
     name = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
     genre = models.CharField(max_length=255)
