@@ -20,11 +20,11 @@ class LibraryClient:
             params['available_count__gt'] = 0
         response = requests.get(f'{self.api_url}/library_books', params=params)
         data = response.json()
-        items = data['results']
-        for item in items: 
-            del item['library']
-            item['bookUid'] = item['book']['id']
-            del item['book']
-            item['availableCount'] = item['available_count']
-            del item['available_count']
+        items = []
+        for result in data['results']: 
+            item = result['book']
+            item['bookUid'] = item['book_uid']
+            del item['book_uid']
+            item['availableCount'] = result['available_count']
+            items.append(item)
         return {"page": page, "pageSize": size, "totalElements": data["count"], "items": items}
