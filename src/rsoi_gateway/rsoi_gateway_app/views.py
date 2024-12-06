@@ -14,7 +14,7 @@ class LibraryViewSet(viewsets.ViewSet):
    client = LibraryClient(SERVICE_URLS['library'])
 
    def list(self, request):
-      return Response(self.client.get_libraries())
+      return Response(self.client.get_libraries(**request.query_params))
 
 
 def healthcheck_view(request):
