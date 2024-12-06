@@ -1,5 +1,4 @@
 from django.http import HttpResponse
-
 from rest_framework import permissions, viewsets
 
 from rsoi_library_app.models import Library, Books, LibraryBooks
@@ -11,6 +10,7 @@ class LibraryViewSet(viewsets.ModelViewSet):
     serializer_class = LibrarySerializer
     permission_classes = [permissions.AllowAny]
     # permission_classes = [permissions.IsAuthenticated]
+    filterset_fields = ('city',)
 
 class BooksViewSet(viewsets.ModelViewSet):
     queryset = Books.objects.all().order_by('book_uid')
