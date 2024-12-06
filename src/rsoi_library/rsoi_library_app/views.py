@@ -23,6 +23,7 @@ class LibraryBooksViewSet(viewsets.ModelViewSet):
     serializer_class = LibraryBooksSerializer
     permission_classes = [permissions.AllowAny]
     # permission_classes = [permissions.IsAuthenticated]
+    filterset_fields = ('available_count', 'library__library_uid')
 
 
 def healthcheck_view(request):

@@ -13,7 +13,18 @@ class BooksSerializer(serializers.HyperlinkedModelSerializer):
         model = Books
         fields = ['id', 'book_uid', 'name', 'author', 'genre', 'condition']
 
-class LibraryBooksSerializer(serializers.HyperlinkedModelSerializer):
+class LibraryBooksSerializer(serializers.ModelSerializer):
+    book_id = serializers.IntegerField(write_only=True)
+    library_id = serializers.IntegerField(write_only=True)
+
     class Meta:
         model = LibraryBooks
-        fields = ['book_id', 'library_id', 'available_count']
+        fields = ['book_id', 'library_id', 'book', 'library', 'available_count']
+        read_only_fields = ['book', 'library']
+        depth = 1
+    
+    def create(self, validated_data):
+        book_id = validated_data.pop('book_id')
+        library_id = validated_data.pop('library_id')
+        library_books = LibraryBooks.objects.create(book_id=book_id, library_id=library_id, **validated_data)
+        return library_books

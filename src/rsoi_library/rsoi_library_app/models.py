@@ -22,6 +22,6 @@ class Books(models.Model):
     condition = models.CharField(max_length=20, choices=CONDITIONS, default='EXELLENT')
     
 class LibraryBooks(models.Model):
-    book_id = models.ForeignKey(Books, on_delete=models.CASCADE)
-    library_id = models.ForeignKey(Library, on_delete=models.CASCADE)       
+    book = models.ForeignKey(Books, on_delete=models.CASCADE)
+    library = models.ForeignKey(Library, on_delete=models.CASCADE)       
     available_count = models.IntegerField(verbose_name='Availability')
