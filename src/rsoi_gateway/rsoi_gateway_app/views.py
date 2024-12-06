@@ -24,7 +24,7 @@ class LibraryViewSet(viewsets.ViewSet):
       return Response(self.client.get_library_books(
          library_uid=pk, page=int(qp.get('page', 1)), 
          size=int(qp.get('size', 10)),
-         show_all=bool(qp.get('showAll', False))
+         show_all=qp.get('showAll', 'false') == 'true'
       ))
 
 
