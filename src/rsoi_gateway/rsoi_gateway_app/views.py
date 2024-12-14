@@ -34,7 +34,10 @@ class RatingViewSet(viewsets.ViewSet):
    def list(self, request):
       if not request.user.is_authenticated:
          return Response(status=401)
-      return Response(self.client.get_rating(user=request.user))
+      rating = self.client.get_rating(user=request.user)
+      if rating is None:
+         return Response(status=404)
+      return Response(rating)
 
        
 def healthcheck_view(request):

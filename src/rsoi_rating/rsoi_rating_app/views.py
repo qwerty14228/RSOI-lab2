@@ -6,10 +6,11 @@ from rsoi_rating_app.models import Rating
 from rsoi_rating_app.serializers import RatingSerializer
 
 class RatingViewSet(viewsets.ModelViewSet):
-    queryset = Rating.objects.all().order_by('username')
+    queryset = Rating.objects.all()
     serializer_class = RatingSerializer
     permission_classes = [permissions.AllowAny]
-    # permission_classes = [permissions.IsAuthenticated]
+    def get_queryset(self):
+        return Rating.objects.filter(username=self.request.user.username)
 
 
 def healthcheck_view(request):

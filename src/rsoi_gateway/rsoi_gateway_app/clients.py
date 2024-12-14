@@ -35,4 +35,8 @@ class RatingClient:
         self.api_url = api_url
 
     def get_rating(self, user=None):
-        return {"stars": 100}
+        response = requests.get(f'{self.api_url}/ratings', headers={'X-User-Name': user.username})
+        data = response.json()
+        if len(data)!=1:
+            return None
+        return data[0]
