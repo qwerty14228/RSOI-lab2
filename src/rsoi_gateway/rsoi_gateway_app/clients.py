@@ -40,3 +40,12 @@ class RatingClient:
         if len(data)!=1:
             return None
         return data[0]
+
+
+class ReservationClient:
+    def __init__(self, api_url):
+        self.api_url = api_url
+
+    def get_reservations(self, user=None):
+        response = requests.get(f'{self.api_url}/reservations', headers={'X-User-Name': user.username})
+        return response.json()

@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 
 from rsoi_gateway.settings import SERVICE_URLS
-from rsoi_gateway_app.clients import LibraryClient, RatingClient
+from rsoi_gateway_app.clients import LibraryClient, RatingClient, ReservationClient
 
 # from rsoi_gateway_app.serializers import LibrarySerializer
 
@@ -38,6 +38,20 @@ class RatingViewSet(viewsets.ViewSet):
       if rating is None:
          return Response(status=404)
       return Response(rating)
+
+
+class ReservationViewSet(viewsets.ViewSet):
+   reservation_client = ReservationClient(SERVICE_URLS['reservation'])
+   library_client = LibraryClient(SERVICE_URLS['library'])
+
+   def list(self, request):
+      if not request.user.is_authenticated:
+         return Response(status=401)
+      reservations = self.reservation_client.get_reservations(user=request.user)
+      for _ in reservations:
+         # TODO: book, library в ответе
+         pass
+      return Response(reservations)
 
        
 def healthcheck_view(request):

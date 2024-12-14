@@ -129,6 +129,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 SERVICE_URLS = {
+    'reservation': environ.get('RESERVATION_API_URL', 'http://localhost:8070/api/v1'),
     'library': environ.get('LIBRARY_API_URL', 'http://localhost:8060/api/v1'),
     'rating': environ.get('RATING_API_URL', 'http://localhost:8050/api/v1'),
 }

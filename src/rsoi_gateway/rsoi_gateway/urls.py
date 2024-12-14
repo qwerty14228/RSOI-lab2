@@ -23,6 +23,7 @@ from rsoi_gateway_app import views
 router = routers.DefaultRouter()
 router.register(r'libraries', views.LibraryViewSet, basename='library')
 router.register(r'rating', views.RatingViewSet, basename='rating')
+router.register(r'reservations', views.ReservationViewSet, basename='reservation')
 
 urlpatterns = [
     path('api/v1/', include(router.urls)), 

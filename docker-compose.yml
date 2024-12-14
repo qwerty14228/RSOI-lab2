@@ -108,6 +108,7 @@ services:
       ALLOWED_HOSTS: "gateway,localhost"
       LIBRARY_API_URL: "http://library:8060/api/v1"
       RATING_API_URL: "http://rating:8050/api/v1"
+      RESERVATION_API_URL: "http://reservation:8070/api/v1"
     restart: on-failure
     ports: 
       - "8080:8080"
