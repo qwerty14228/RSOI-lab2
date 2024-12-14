@@ -51,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'rsoi_common.auth.RsoiAuthMiddleware'
 ]
 
 ROOT_URLCONF = 'rsoi_gateway.urls'
@@ -128,5 +129,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 SERVICE_URLS = {
-    'library': environ.get('LIBRARY_API_URL', 'http://localhost:8060/api/v1') 
+    'library': environ.get('LIBRARY_API_URL', 'http://localhost:8060/api/v1'),
+    'rating': environ.get('RATING_API_URL', 'http://localhost:8050/api/v1'),
 }

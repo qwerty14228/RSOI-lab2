@@ -28,3 +28,11 @@ class LibraryClient:
             item['availableCount'] = result['available_count']
             items.append(item)
         return {"page": page, "pageSize": size, "totalElements": data["count"], "items": items}
+    
+
+class RatingClient:
+    def __init__(self, api_url):
+        self.api_url = api_url
+
+    def get_rating(self, user=None):
+        return {"stars": 100}

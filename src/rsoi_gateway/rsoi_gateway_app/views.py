@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 
 from rsoi_gateway.settings import SERVICE_URLS
-from rsoi_gateway_app.clients import LibraryClient
+from rsoi_gateway_app.clients import LibraryClient, RatingClient
 
 # from rsoi_gateway_app.serializers import LibrarySerializer
 
@@ -28,6 +28,15 @@ class LibraryViewSet(viewsets.ViewSet):
       ))
 
 
+class RatingViewSet(viewsets.ViewSet):
+   client = RatingClient(SERVICE_URLS['rating'])
+
+   def list(self, request):
+      if not request.user.is_authenticated:
+         return Response(status=401)
+      return Response(self.client.get_rating(user=request.user))
+
+       
 def healthcheck_view(request):
     
     return HttpResponse("")
