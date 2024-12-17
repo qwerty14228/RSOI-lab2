@@ -22,7 +22,6 @@ class LibraryBooksViewSet(viewsets.ModelViewSet):
     queryset = LibraryBooks.objects.all()
     serializer_class = LibraryBooksSerializer
     permission_classes = [permissions.AllowAny]
-    # permission_classes = [permissions.IsAuthenticated]
     filterset_fields = ('available_count', 'library__library_uid')
 
 

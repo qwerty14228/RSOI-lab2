@@ -10,7 +10,6 @@ class ReservationViewSet(viewsets.ModelViewSet):
     queryset = Reservation.objects.all().order_by('reservation_uid')
     serializer_class = ReservationSerializer
     permission_classes = [permissions.AllowAny]
-    # permission_classes = [permissions.IsAuthenticated]
 
 
 def healthcheck_view(request):
