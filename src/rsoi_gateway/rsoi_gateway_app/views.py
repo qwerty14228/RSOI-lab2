@@ -61,11 +61,24 @@ class ReservationViewSet(viewsets.ViewSet):
       reservations = self.reservation_client.get_reservations(user=request.user, status='RENTED')
       rating = self.rating_client.get_rating(user=request.user)
       if rating is None or rating['stars'] < len(reservations) + 1:
-         pass #return Response(status=403)
+         return Response(status=403)
       
-      return Response(request.body)
-      #reservation = self.reservation_client.create_reservation(user=request.user)
-      #return Response(reservation)
+      body = request.data
+      library_books = self.library_client.get_library_books(library_uid=body['libraryUid'], book_uid=body['bookUid'])
+      if len(library_books['items']) == 0:
+         return Response(status=404)
+      available_count = library_books['items'][0]['availableCount']
+      if available_count == 0:
+         return Response(status=403)
+      reservation = self.reservation_client.create_reservation(
+         user=request.user, 
+         book_uid=body['bookUid'], 
+         library_uid=body['libraryUid'], 
+         till_date=body['tillDate']
+      )
+      self.library_client.update_book_available_count(library_book_id=library_books['items'][0]['id'],
+                                                      available_count=available_count - 1, user=request.user)
+      return Response(reservation)
 
 
 def healthcheck_view(request):

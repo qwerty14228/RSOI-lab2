@@ -1,3 +1,5 @@
+from datetime import datetime as dt
+
 import requests
 
 
@@ -14,10 +16,12 @@ class LibraryClient:
             del item['library_uid']
         return {"page": page, "pageSize": size, "totalElements": data["count"], "items": items}
 
-    def get_library_books(self, library_uid='', page=1, size=10, show_all=False): 
+    def get_library_books(self, library_uid='', book_uid=None, page=1, size=10, show_all=False): 
         params = {'library__library_uid': library_uid, 'page': page, 'size': size}
         if not show_all:
             params['available_count__gt'] = 0
+        if book_uid is not None:
+            params['book__book_uid'] = book_uid
         response = requests.get(f'{self.api_url}/library_books', params=params)
         data = response.json()
         items = []
@@ -29,8 +33,8 @@ class LibraryClient:
             items.append(item)
         return {"page": page, "pageSize": size, "totalElements": data["count"], "items": items}
     
-    def update_book_available_count(self, user=None, book_uid=None, available_count=0):
-        response = requests.patch(f'{self.api_url}/library_books', params={'book__book_uid': book_uid},
+    def update_book_available_count(self, user=None, library_book_id=None, available_count=0):
+        response = requests.patch(f'{self.api_url}/library_books/{library_book_id}/',
                                 data={'available_count': available_count}, headers={'X-User-Name': user.username})
         return response.json()
     
@@ -40,9 +44,10 @@ class RatingClient:
         self.api_url = api_url
 
     def get_rating(self, user=None):
-        response = requests.get(f'{self.api_url}/ratings', headers={'X-User-Name': user.username})
+        response = requests.get(f'{self.api_url}/ratings', headers={'X-User-Name': user.username}, 
+                                params={'username': user.username})
         data = response.json()
-        if len(data)!=1:
+        if len(data)==0:
             return None
         return data[0]
 
@@ -60,6 +65,8 @@ class ReservationClient:
         return response.json()
     
     def create_reservation(self, user=None, book_uid=None, library_uid=None, till_date=None):
-        response = requests.post(f'{self.api_url}/reservations', data={'book_uid': book_uid, 'library_uid': library_uid, 
-                                                                       'till_date': till_date}, headers={'X-User-Name': user.username})
+        start_date = dt.now()
+        response = requests.post(f'{self.api_url}/reservations/', data={'book_uid': book_uid, 'library_uid': library_uid, 
+                                                                       'till_date': till_date, 'username': user.username, 
+                                                                       'status': "RENTED", 'start_date': start_date.strftime('%Y-%m-%d')}, headers={'X-User-Name': user.username})
         return response.json()

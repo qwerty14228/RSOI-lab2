@@ -19,7 +19,7 @@ class LibraryBooksSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = LibraryBooks
-        fields = ['book_id', 'library_id', 'book', 'library', 'available_count']
+        fields = ['id', 'book_id', 'library_id', 'book', 'library', 'available_count']
         read_only_fields = ['book', 'library']
         depth = 1
     
