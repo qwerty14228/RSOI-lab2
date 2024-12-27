@@ -55,7 +55,6 @@ class ReservationViewSet(viewsets.ViewSet):
       return Response(reservations)
 
    def create(self, request):
-      print(request.user)
       if not request.user.is_authenticated:
          return Response(status=401)
       reservations = self.reservation_client.get_reservations(user=request.user, status='RENTED')
@@ -64,10 +63,10 @@ class ReservationViewSet(viewsets.ViewSet):
          return Response(status=403)
       
       body = request.data
-      library_books = self.library_client.get_library_books(library_uid=body['libraryUid'], book_uid=body['bookUid'])
-      if len(library_books['items']) == 0:
+      lb = self.library_client.get_library_book(library_uid=body['libraryUid'], book_uid=body['bookUid'])
+      if lb is None:
          return Response(status=404)
-      available_count = library_books['items'][0]['availableCount']
+      available_count = lb['available_count']
       if available_count == 0:
          return Response(status=403)
       reservation = self.reservation_client.create_reservation(
@@ -76,9 +75,19 @@ class ReservationViewSet(viewsets.ViewSet):
          library_uid=body['libraryUid'], 
          till_date=body['tillDate']
       )
-      self.library_client.update_book_available_count(library_book_id=library_books['items'][0]['id'],
+      self.library_client.update_book_available_count(library_book_id=lb['id'],
                                                       available_count=available_count - 1, user=request.user)
-      return Response(reservation)
+      
+      result = reservation
+      result['reservationUid'] = result['reservation_uid']
+      result['startDate'] = result['start_date']
+      result['tillDate'] = result['till_date']
+      result["rating"] = rating 
+      result["book"] = lb["book"]
+      result["library"] = lb["library"]
+      result["book"]["bookUid"] = result["book"]["book_uid"]
+      result["library"]["libraryUid"] = result["library"]["library_uid"]
+      return Response(result)
 
 
 def healthcheck_view(request):

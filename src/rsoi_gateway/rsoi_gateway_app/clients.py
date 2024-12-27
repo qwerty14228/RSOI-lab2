@@ -33,6 +33,14 @@ class LibraryClient:
             items.append(item)
         return {"page": page, "pageSize": size, "totalElements": data["count"], "items": items}
     
+    def get_library_book(self, library_uid=None, book_uid=None):
+        params = {"library__library_uid": library_uid, "book__book_uid": book_uid}
+        response = requests.get(f'{self.api_url}/library_books', params=params)
+        data = response.json()
+        if len(data['results']) == 0:
+            return None
+        return data['results'][0]
+    
     def update_book_available_count(self, user=None, library_book_id=None, available_count=0):
         response = requests.patch(f'{self.api_url}/library_books/{library_book_id}',
                                 data={'available_count': available_count}, headers={'X-User-Name': user.username})
