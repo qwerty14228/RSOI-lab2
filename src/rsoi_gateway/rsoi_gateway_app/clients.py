@@ -34,7 +34,7 @@ class LibraryClient:
         return {"page": page, "pageSize": size, "totalElements": data["count"], "items": items}
     
     def update_book_available_count(self, user=None, library_book_id=None, available_count=0):
-        response = requests.patch(f'{self.api_url}/library_books/{library_book_id}/',
+        response = requests.patch(f'{self.api_url}/library_books/{library_book_id}',
                                 data={'available_count': available_count}, headers={'X-User-Name': user.username})
         return response.json()
     
@@ -66,7 +66,7 @@ class ReservationClient:
     
     def create_reservation(self, user=None, book_uid=None, library_uid=None, till_date=None):
         start_date = dt.now()
-        response = requests.post(f'{self.api_url}/reservations/', data={'book_uid': book_uid, 'library_uid': library_uid, 
+        response = requests.post(f'{self.api_url}/reservations', data={'book_uid': book_uid, 'library_uid': library_uid, 
                                                                        'till_date': till_date, 'username': user.username, 
                                                                        'status': "RENTED", 'start_date': start_date.strftime('%Y-%m-%d')}, headers={'X-User-Name': user.username})
         return response.json()

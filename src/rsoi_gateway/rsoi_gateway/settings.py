@@ -135,3 +135,5 @@ SERVICE_URLS = {
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ['rsoi_common.auth.RsoiAuthentication'],
 }
+
+APPEND_SLASH = False
