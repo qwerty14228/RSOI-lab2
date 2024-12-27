@@ -1,3 +1,6 @@
+from rest_framework import authentication
+
+
 class RsoiUser:
 
     is_active = True
@@ -8,16 +11,12 @@ class RsoiUser:
             setattr(self, k, v)
 
 
-class RsoiAuthMiddleware:
-    def __init__(self, get_response):
-        self.get_response = get_response
-    
-    def __call__(self, request):
-        username = request.headers.get('x-user-name')
+class RsoiAuthentication(authentication.BaseAuthentication):
+    def authenticate(self, request):
+        username = request.headers.get('X-User-Name')
+        if not username:
+            return None
 
-        if username is not None:
-            request.user = RsoiUser(username=username)
-        
-        response = self.get_response(request)
+        user = RsoiUser(username=username)
 
-        return response
+        return (user, None)

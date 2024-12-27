@@ -47,11 +47,9 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'rsoi_common.auth.RsoiAuthMiddleware'
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
 ROOT_URLCONF = 'rsoi_gateway.urls'
@@ -132,4 +130,8 @@ SERVICE_URLS = {
     'reservation': environ.get('RESERVATION_API_URL', 'http://localhost:8070/api/v1'),
     'library': environ.get('LIBRARY_API_URL', 'http://localhost:8060/api/v1'),
     'rating': environ.get('RATING_API_URL', 'http://localhost:8050/api/v1'),
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ['rsoi_common.auth.RsoiAuthentication'],
 }

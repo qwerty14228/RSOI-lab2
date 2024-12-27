@@ -7,10 +7,14 @@ from rsoi_reservation_app.serializers import ReservationSerializer
 
 
 class ReservationViewSet(viewsets.ModelViewSet):
-    queryset = Reservation.objects.all().order_by('reservation_uid')
+    queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
     permission_classes = [permissions.AllowAny]
+    filterset_fields = ('status',)
 
+    def get_queryset(self):
+        return Reservation.objects.filter(username=self.request.user.username)
+ 
 
 def healthcheck_view(request):
     

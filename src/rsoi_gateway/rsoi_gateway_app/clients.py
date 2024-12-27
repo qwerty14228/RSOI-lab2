@@ -29,6 +29,11 @@ class LibraryClient:
             items.append(item)
         return {"page": page, "pageSize": size, "totalElements": data["count"], "items": items}
     
+    def update_book_available_count(self, user=None, book_uid=None, available_count=0):
+        response = requests.patch(f'{self.api_url}/library_books', params={'book__book_uid': book_uid},
+                                data={'available_count': available_count}, headers={'X-User-Name': user.username})
+        return response.json()
+    
 
 class RatingClient:
     def __init__(self, api_url):
@@ -46,6 +51,15 @@ class ReservationClient:
     def __init__(self, api_url):
         self.api_url = api_url
 
-    def get_reservations(self, user=None):
-        response = requests.get(f'{self.api_url}/reservations', headers={'X-User-Name': user.username})
+    def get_reservations(self, user=None, status=None):
+        if status is None:
+            params = {}
+        else:
+            params = {'status': status} 
+        response = requests.get(f'{self.api_url}/reservations', params=params, headers={'X-User-Name': user.username})
+        return response.json()
+    
+    def create_reservation(self, user=None, book_uid=None, library_uid=None, till_date=None):
+        response = requests.post(f'{self.api_url}/reservations', data={'book_uid': book_uid, 'library_uid': library_uid, 
+                                                                       'till_date': till_date}, headers={'X-User-Name': user.username})
         return response.json()

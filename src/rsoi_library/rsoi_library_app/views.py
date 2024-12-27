@@ -22,7 +22,7 @@ class LibraryBooksViewSet(viewsets.ModelViewSet):
     queryset = LibraryBooks.objects.all()
     serializer_class = LibraryBooksSerializer
     permission_classes = [permissions.AllowAny]
-    filterset_fields = ('available_count', 'library__library_uid')
+    filterset_fields = ('available_count', 'library__library_uid', 'book__book_uid')
 
 
 def healthcheck_view(request):

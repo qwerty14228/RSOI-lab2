@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 
-from rest_framework import permissions, viewsets
+from rest_framework import viewsets
 
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -43,6 +43,7 @@ class RatingViewSet(viewsets.ViewSet):
 class ReservationViewSet(viewsets.ViewSet):
    reservation_client = ReservationClient(SERVICE_URLS['reservation'])
    library_client = LibraryClient(SERVICE_URLS['library'])
+   rating_client = RatingClient(SERVICE_URLS['rating'])
 
    def list(self, request):
       if not request.user.is_authenticated:
@@ -53,7 +54,20 @@ class ReservationViewSet(viewsets.ViewSet):
          pass
       return Response(reservations)
 
-       
+   def create(self, request):
+      print(request.user)
+      if not request.user.is_authenticated:
+         return Response(status=401)
+      reservations = self.reservation_client.get_reservations(user=request.user, status='RENTED')
+      rating = self.rating_client.get_rating(user=request.user)
+      if rating is None or rating['stars'] < len(reservations) + 1:
+         pass #return Response(status=403)
+      
+      return Response(request.body)
+      #reservation = self.reservation_client.create_reservation(user=request.user)
+      #return Response(reservation)
+
+
 def healthcheck_view(request):
     
     return HttpResponse("")
