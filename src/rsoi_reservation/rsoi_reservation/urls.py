@@ -20,7 +20,7 @@ from rest_framework import routers
 
 from rsoi_reservation_app import views
 
-router = routers.DefaultRouter()
+router = routers.SimpleRouter(trailing_slash=False)
 router.register(r'reservations', views.ReservationViewSet)
 
 urlpatterns = [

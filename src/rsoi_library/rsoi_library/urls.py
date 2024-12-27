@@ -20,7 +20,7 @@ from rest_framework import routers
 
 from rsoi_library_app import views
 
-router = routers.DefaultRouter()
+router = routers.SimpleRouter(trailing_slash=False)
 router.register(r'libraries', views.LibraryViewSet)
 router.register(r'books', views.BooksViewSet)
 router.register(r'library_books', views.LibraryBooksViewSet)

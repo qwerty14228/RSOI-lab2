@@ -20,7 +20,7 @@ from rest_framework import routers
 
 from rsoi_gateway_app import views
 
-router = routers.DefaultRouter()
+router = routers.SimpleRouter(trailing_slash=False)
 router.register(r'libraries', views.LibraryViewSet, basename='library')
 router.register(r'rating', views.RatingViewSet, basename='rating')
 router.register(r'reservations', views.ReservationViewSet, basename='reservation')
