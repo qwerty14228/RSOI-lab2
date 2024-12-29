@@ -49,10 +49,19 @@ class ReservationViewSet(viewsets.ViewSet):
       if not request.user.is_authenticated:
          return Response(status=401)
       reservations = self.reservation_client.get_reservations(user=request.user)
-      for _ in reservations:
-         #TODO: book, library в ответе
-         pass
-      return Response(reservations)
+      results = []
+      for reservation in reservations:
+         lb = self.library_client.get_library_book(library_uid=reservation['library_uid'], book_uid=reservation['book_uid'])
+         result = reservation
+         result['reservationUid'] = result['reservation_uid']
+         result['startDate'] = result['start_date']
+         result['tillDate'] = result['till_date'] 
+         result["book"] = lb["book"]
+         result["library"] = lb["library"]
+         result["book"]["bookUid"] = result["book"]["book_uid"]
+         result["library"]["libraryUid"] = result["library"]["library_uid"]
+         results.append(result)
+      return Response(results)
 
    def create(self, request):
       if not request.user.is_authenticated:
