@@ -50,7 +50,7 @@ class ReservationViewSet(viewsets.ViewSet):
          return Response(status=401)
       reservations = self.reservation_client.get_reservations(user=request.user)
       for _ in reservations:
-         # TODO: book, library в ответе
+         #TODO: book, library в ответе
          pass
       return Response(reservations)
 

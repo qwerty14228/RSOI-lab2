@@ -14,5 +14,5 @@ class Reservation(models.Model):
         ('EXPIRED', 'EXPIRED'),
     ]
     status = models.CharField(max_length=20, choices=STATUSES)
-    start_date = models.DateTimeField()
-    till_date = models.DateTimeField()
+    start_date = models.DateField()
+    till_date = models.DateField()
