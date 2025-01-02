@@ -77,16 +77,24 @@ WSGI_APPLICATION = 'rsoi_rating.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'HOST': environ['POSTGRES_HOST'],
-        'PORT': 5432,
-        'USER': environ['POSTGRES_USER'],
-        'NAME': environ['POSTGRES_DB'],
-        'PASSWORD': environ['POSTGRES_PASSWORD'],
+if 'RUN_UNIT_TESTS' in environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': ':memory:'
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': environ['POSTGRES_HOST'],
+            'PORT': 5432,
+            'USER': environ['POSTGRES_USER'],
+            'NAME': environ['POSTGRES_DB'],
+            'PASSWORD': environ['POSTGRES_PASSWORD'],
+        }
+    }
 
 
 # Password validation
@@ -130,8 +138,11 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': ['rsoi_common.auth.RsoiAuthentication'],
-}
+if 'RUN_UNIT_TESTS' in environ:
+    REST_FRAMEWORK = {}
+else:
+    REST_FRAMEWORK = {
+        'DEFAULT_AUTHENTICATION_CLASSES': ['rsoi_common.auth.RsoiAuthentication'],
+    }
 
 APPEND_SLASH = False

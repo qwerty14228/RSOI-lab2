@@ -19,6 +19,8 @@ jobs:
       - uses: docker/setup-buildx-action@v2
 
       # TODO build and run unit tests
+      - name: Run rating service unit tests
+        run: cd ./src/rsoi_rating && sh run_unit_tests.sh
 
       - name: Build images
         timeout-minutes: 10
