@@ -20,7 +20,12 @@ jobs:
 
       # TODO build and run unit tests
       - name: Run rating service unit tests
-        run: cd ./src/rsoi_rating && sh run_unit_tests.sh
+        run: |
+          cd ./src/rsoi_rating
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+          sh run_unit_tests.sh
 
       - name: Build images
         timeout-minutes: 10
