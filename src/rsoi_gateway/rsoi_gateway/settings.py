@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'rsoi_gateway.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': ':memory:' if 'RUN_UNIT_TESTS' in environ else BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -132,8 +132,11 @@ SERVICE_URLS = {
     'rating': environ.get('RATING_API_URL', 'http://localhost:8050/api/v1'),
 }
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': ['rsoi_common.auth.RsoiAuthentication'],
-}
+if 'RUN_UNIT_TESTS' in environ:
+    REST_FRAMEWORK = {}
+else:
+    REST_FRAMEWORK = {
+        'DEFAULT_AUTHENTICATION_CLASSES': ['rsoi_common.auth.RsoiAuthentication'],
+    }
 
 APPEND_SLASH = False

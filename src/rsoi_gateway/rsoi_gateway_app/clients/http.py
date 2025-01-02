@@ -2,8 +2,10 @@ from datetime import datetime as dt
 
 import requests
 
+from rsoi_gateway_app.clients.abstract import *
 
-class LibraryClient:
+
+class LibraryClient(AbstractLibraryClient):
     def __init__(self, api_url):
         self.api_url = api_url
     
@@ -47,7 +49,7 @@ class LibraryClient:
         return response.json()
     
 
-class RatingClient:
+class RatingClient(AbstractRatingClient):
     def __init__(self, api_url):
         self.api_url = api_url
 
@@ -64,7 +66,7 @@ class RatingClient:
         return response.json()
 
 
-class ReservationClient:
+class ReservationClient(AbstractReservationClient):
     def __init__(self, api_url):
         self.api_url = api_url
 

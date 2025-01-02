@@ -27,6 +27,14 @@ jobs:
           pip install -r requirements.txt
           sh run_unit_tests.sh
 
+      - name: Run gateway service unit tests
+        run: |
+          cd ./src/rsoi_gateway
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+          sh run_unit_tests.sh
+
       - name: Build images
         timeout-minutes: 10
         run: docker compose build
