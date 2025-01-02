@@ -10,7 +10,7 @@ class RatingViewSet(viewsets.ModelViewSet):
     serializer_class = RatingSerializer
     permission_classes = [permissions.AllowAny]
     def get_queryset(self):
-        return Rating.objects.filter(username=self.request.user.username)
+        return Rating.objects.filter(username=self.request.user.username).order_by('id')
 
 
 def healthcheck_view(request):

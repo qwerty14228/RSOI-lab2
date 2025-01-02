@@ -125,7 +125,7 @@ class ReservationViewSet(viewsets.ViewSet):
          rating_delta = 1
       self.library_client.update_book_available_count(library_book_id=lb['id'],
                                                       available_count=lb['available_count'] + 1, user=request.user)
-      self.rating_client.update_rating(user=request.user, rating_id=rating['id'], stars=rating['stars'] + rating_delta)
+      self.rating_client.update_rating(rating_id=rating['id'], stars=rating['stars'] + rating_delta, user=request.user)
       self.reservation_client.update_reservation(reservation_id=reservation['id'], status=reservation_status, user=request.user)
       return Response(status=204)
 
