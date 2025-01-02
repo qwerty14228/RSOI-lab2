@@ -13,7 +13,7 @@ class LibraryClientTestCase(TestCase):
         self.assertEqual(1, data['page'])
         self.assertEqual(10, data['pageSize'])
         self.assertLessEqual(len(data['items']), 10)
-        self.assertGreaterEqual(data['totalItems'], 0)
+        self.assertGreaterEqual(data['totalElements'], 0)
         for item in data['items']:
             self.assertIn('libraryUid', item)
             self.assertIn('city', item)
