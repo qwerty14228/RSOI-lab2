@@ -58,6 +58,10 @@ class RatingClient:
         if len(data)==0:
             return None
         return data[0]
+    
+    def update_rating(self, user=None, rating_id=None, stars=None):
+        response = requests.patch(f'{self.api_url}/ratings/{rating_id}', data={'stars': stars}, headers={'X-User-Name': user.username})
+        return response.json()
 
 
 class ReservationClient:
@@ -77,4 +81,15 @@ class ReservationClient:
         response = requests.post(f'{self.api_url}/reservations', data={'book_uid': book_uid, 'library_uid': library_uid, 
                                                                        'till_date': till_date, 'username': user.username, 
                                                                        'status': "RENTED", 'start_date': start_date.strftime('%Y-%m-%d')}, headers={'X-User-Name': user.username})
+        return response.json()
+    
+    def get_reservation(self, user=None, reservation_uid=None):
+        response = requests.get(f'{self.api_url}/reservations', params={'reservation_uid': reservation_uid}, headers={'X-User-Name': user.username})
+        data = response.json()
+        if len(data)==0:
+            return None
+        return data[0]
+    
+    def update_reservation(self, user=None, reservation_id=None, status=None):
+        response = requests.patch(f'{self.api_url}/reservations/{reservation_id}', data={'status': status}, headers={'X-User-Name': user.username})
         return response.json()

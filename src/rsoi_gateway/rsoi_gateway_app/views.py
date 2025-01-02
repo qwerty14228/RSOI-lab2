@@ -1,5 +1,7 @@
 from django.http import HttpResponse
 
+from datetime import datetime
+
 from rest_framework import viewsets
 
 from rest_framework.response import Response
@@ -97,6 +99,35 @@ class ReservationViewSet(viewsets.ViewSet):
       result["book"]["bookUid"] = result["book"]["book_uid"]
       result["library"]["libraryUid"] = result["library"]["library_uid"]
       return Response(result)
+   
+   @action(detail=True, methods=['post'], url_name='return', url_path='return')
+   def return_book(self, request, pk=None):
+      reservation=self.reservation_client.get_reservation(user=request.user, reservation_uid=pk)
+      lb = self.library_client.get_library_book(library_uid=reservation['library_uid'], book_uid=reservation['book_uid'])
+      if lb is None:
+         return Response(status=404)
+      rating = self.rating_client.get_rating(user=request.user)
+      if rating is None:
+         return Response(status=403)
+      if reservation['status'] != 'RENTED':
+         return Response(status=204)
+      rating_delta = 0
+      reservation_status = 'RETURNED'
+      body = request.data
+      if body['condition'] != lb['book']['condition']:
+         rating_delta -= 10
+      return_date = datetime.strptime(body['date'], '%Y-%m-%d')
+      till_date = datetime.strptime(reservation['till_date'], '%Y-%m-%d')
+      if till_date < return_date:
+         rating_delta -= 10
+         reservation_status = 'EXPIRED'
+      if rating_delta == 0:
+         rating_delta = 1
+      self.library_client.update_book_available_count(library_book_id=lb['id'],
+                                                      available_count=lb['available_count'] + 1, user=request.user)
+      self.rating_client.update_rating(user=request.user, rating_id=rating['id'], stars=rating['stars'] + rating_delta)
+      self.reservation_client.update_reservation(reservation_id=reservation['id'], status=reservation_status, user=request.user)
+      return Response(status=204)
 
 
 def healthcheck_view(request):

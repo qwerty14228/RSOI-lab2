@@ -10,7 +10,7 @@ class ReservationViewSet(viewsets.ModelViewSet):
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
     permission_classes = [permissions.AllowAny]
-    filterset_fields = ('status',)
+    filterset_fields = ('status', 'reservation_uid')
 
     def get_queryset(self):
         return Reservation.objects.filter(username=self.request.user.username)
