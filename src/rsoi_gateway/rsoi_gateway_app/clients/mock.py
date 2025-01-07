@@ -111,3 +111,80 @@ class MockLibraryClient(AbstractLibraryClient):
             "available_count": 150
         }
         return data
+    
+class MockReservationClient(AbstractLibraryClient):
+    def get_reservations(self, user=None, status=None):
+        data = [
+            {
+                "id": 1,
+                "username": "ivan",
+                "reservation_uid": "9e162628-d9e1-463c-9a7e-9873d29a9fde",
+                "book_uid": "f7cdc58f-2caf-4b15-9727-f89dcc629b27",
+                "library_uid": "83575e12-7ce0-48ee-9931-51919ff3c9ee",
+                "status": "RENTED",
+                "start_date": "2025-01-08",
+                "till_date": "2025-03-08"
+            }
+        ]
+        return data
+    
+    def create_reservation(self, user=None, book_uid=None, library_uid=None, till_date=None):
+        return {
+            "id": 1,
+            "username": "ivan",
+            "reservation_uid": "9e162628-d9e1-463c-9a7e-9873d29a9fde",
+            "book_uid": "f7cdc58f-2caf-4b15-9727-f89dcc629b27",
+            "library_uid": "83575e12-7ce0-48ee-9931-51919ff3c9ee",
+            "status": "RENTED",
+            "start_date": "2025-01-08",
+            "till_date": "2025-03-08"
+        }
+    
+    def get_reservation(self, user=None, reservation_uid=None):
+        data = [
+            {
+                "id": 1,
+                "username": "ivan",
+                "reservation_uid": "9e162628-d9e1-463c-9a7e-9873d29a9fde",
+                "book_uid": "f7cdc58f-2caf-4b15-9727-f89dcc629b27",
+                "library_uid": "83575e12-7ce0-48ee-9931-51919ff3c9ee",
+                "status": "RENTED",
+                "start_date": "2025-01-08",
+                "till_date": "2025-03-08"
+            }
+        ]
+        if len(data)==0:
+            return None
+        return data[0]
+    
+    def update_reservation(self, user=None, reservation_id=None, status=None):
+        return {
+            "id": 1,
+            "username": "ivan",
+            "reservation_uid": "9e162628-d9e1-463c-9a7e-9873d29a9fde",
+            "book_uid": "f7cdc58f-2caf-4b15-9727-f89dcc629b27",
+            "library_uid": "83575e12-7ce0-48ee-9931-51919ff3c9ee",
+            "status": "EXPIRED",
+            "start_date": "2025-01-08",
+            "till_date": "2025-03-08"
+        }
+    
+class RatingClient(AbstractRatingClient):
+    def get_rating(self, user=None):
+        data = [
+            {
+                "id": 1,
+                "username": "rsoi-user",
+                "stars": 50
+            }
+        ]
+        if len(data)==0:
+            return None
+        return data[0]
+    
+    def update_rating(self, user=None, rating_id=None, stars=None):
+        return {
+            "id": 1,
+            "username": "rsoi-user",
+            "stars": 70
+        }
