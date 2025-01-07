@@ -169,7 +169,7 @@ class MockReservationClient(AbstractLibraryClient):
             "till_date": "2025-03-08"
         }
     
-class RatingClient(AbstractRatingClient):
+class MockRatingClient(AbstractRatingClient):
     def get_rating(self, user=None):
         data = [
             {
