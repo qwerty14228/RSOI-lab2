@@ -18,7 +18,7 @@ jobs:
 
       - uses: docker/setup-buildx-action@v2
 
-      # TODO build and run unit tests
+      # TODO here tests
       - name: Run rating service unit tests
         run: |
           cd ./src/rsoi_rating

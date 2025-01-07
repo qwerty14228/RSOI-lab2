@@ -24,10 +24,90 @@ class MockLibraryClient(AbstractLibraryClient):
         return {"page": page, "pageSize": size, "totalElements": data["count"], "items": items}
 
     def get_library_books(self, library_uid='', book_uid=None, page=1, size=10, show_all=False): 
-        raise NotImplementedError()
+        data = {
+            "count": 1,
+            "next": None,
+            "previous": None,
+            "results": [
+                {
+                    "id": 1,
+                    "book": {
+                        "id": 1,
+                        "book_uid": "f7cdc58f-2caf-4b15-9727-f89dcc629b27",
+                        "name": "Краткий курс C++ в 7 томах",
+                        "author": "Бьерн Страуструп",
+                        "genre": "Научная фантастика",
+                        "condition": "EXCELLENT"
+                    },
+                    "library": {
+                        "id": 1,
+                        "library_uid": "83575e12-7ce0-48ee-9931-51919ff3c9ee",
+                        "name": "Библиотека имени 7 Непьющих",
+                        "city": "Москва",
+                        "address": "2-я Бауманская ул., д.5, стр.1"
+                    },
+                    "available_count": 1
+                }
+            ]
+        }
+        items = []
+        for result in data['results']: 
+            item = result['book']
+            item['bookUid'] = item['book_uid']
+            del item['book_uid']
+            item['availableCount'] = result['available_count']
+            items.append(item)
+        return {"page": page, "pageSize": size, "totalElements": data["count"], "items": items}
     
     def get_library_book(self, library_uid=None, book_uid=None):
-        raise NotImplementedError()
+        data = {
+            "count": 1,
+            "next": None,
+            "previous": None,
+            "results": [
+                {
+                    "id": 1,
+                    "book": {
+                        "id": 1,
+                        "book_uid": "f7cdc58f-2caf-4b15-9727-f89dcc629b27",
+                        "name": "Краткий курс C++ в 7 томах",
+                        "author": "Бьерн Страуструп",
+                        "genre": "Научная фантастика",
+                        "condition": "EXCELLENT"
+                    },
+                    "library": {
+                        "id": 1,
+                        "library_uid": "83575e12-7ce0-48ee-9931-51919ff3c9ee",
+                        "name": "Библиотека имени 7 Непьющих",
+                        "city": "Москва",
+                        "address": "2-я Бауманская ул., д.5, стр.1"
+                    },
+                    "available_count": 1
+                }
+            ]
+        }
+        if len(data['results']) == 0:
+            return None
+        return data['results'][0]
     
     def update_book_available_count(self, user=None, library_book_id=None, available_count=0):
-        raise NotImplementedError()
+        data = {
+            "id": 1,
+            "book": {
+                "id": 1,
+                "book_uid": "f7cdc58f-2caf-4b15-9727-f89dcc629b27",
+                "name": "Краткий курс C++ в 7 томах",
+                "author": "Бьерн Страуструп",
+                "genre": "Научная фантастика",
+                "condition": "EXCELLENT"
+            },
+            "library": {
+                "id": 1,
+                "library_uid": "83575e12-7ce0-48ee-9931-51919ff3c9ee",
+                "name": "Библиотека имени 7 Непьющих",
+                "city": "Москва",
+                "address": "2-я Бауманская ул., д.5, стр.1"
+            },
+            "available_count": 150
+        }
+        return data
