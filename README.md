@@ -69,3 +69,5 @@
 1. [Hotels Booking System](v2/README.md)
 1. [Car Rental System](v3/README.md)
 1. [Library System](v4/README.md)
+
+В связи с номером в группе, будем делать вариант №4
